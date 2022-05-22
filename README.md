@@ -164,11 +164,13 @@ Filebeat: `curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bb
 
 Metricbeat: `curl https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml`
 
-![](resources/curlConfig.png)
+<img width="1041" alt="curlConfig" src="https://user-images.githubusercontent.com/70340383/169717870-7b659511-8f7a-466a-a1e9-9c6f4575750e.png">
+
 
 2. Once the two configuration files are obtained, they will need to be edited. The Filebeat file will be much larger, however the items to change can be found on line #1106 and #1806. The IP addresses here will need to be the internal IP of the ELK machine. The Metricbeat file is much smaller, but can be configured in the same way.
 
-![](resources/config_edit.png)
+<img width="681" alt="config_edit" src="https://user-images.githubusercontent.com/70340383/169717875-d6cbb83c-9906-4673-9a9b-3e71e6966a53.png">
+
 
 3. Once the config files are updated, the Ansible playbooks can be created. Add these playbooks into a new directory `/etc/ansible/roles`. In this new directory, `touch` the playbook files called `filebeat-playbook.yml` and `metricbeat-playbook.yml`.
 
@@ -181,13 +183,14 @@ The two YAML playbooks can be found here:
 
 Once everything is ready to go, run the playbooks from the `/roles/` directory. If successful, the output should be similar to below:
 
+<img width="1046" alt="filebeatpb" src="https://user-images.githubusercontent.com/70340383/169717895-538a5eca-7f2c-4698-bea5-d64b3c5e6572.png">
 
-![](resources/filebeatpb.png)
 
 Once both playbooks have been successfully run, verify the installation of these services by taking a look back at the instructions on the Kibana GUI. Scroll down to step #5, click on "Check Data". If that is successful, click on "View Dashboard". This will display the dashboards, which might look similar to the ones below.
 
-![](resources/filebeatdash.png)
-![](resources/metricbeatdash.png)
+<img width="1349" alt="filebeatdash" src="https://user-images.githubusercontent.com/70340383/169717903-754fb688-3e98-4f6e-984f-9d4a8213b323.png">
+<img width="1361" alt="metricbeatdash" src="https://user-images.githubusercontent.com/70340383/169717909-8c52e813-b695-4b4f-a8cd-a01d57fc8af4.png">
+
 
 ### Conclusion
 
