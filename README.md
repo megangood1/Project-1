@@ -11,7 +11,7 @@ In this project, Microsoft's Azure was used in order to build out a virtualized 
 
 As a reference, the network diagram below should be used in order to visualize the cloud infrastructure and interactions. 
 
-![](resources/azurenet.png)
+![azurenet](https://user-images.githubusercontent.com/70340383/169717632-84e46236-e372-4bc5-a963-6aad0a55ca9e.png)
 
 ### Overview
 
@@ -32,8 +32,7 @@ Setting up cloud infrastructure is often unique to the platform used, but a high
 
 3. Create Virtual Machines. Initially, the Jumpbox VM is created which will be the access point for all other VMs on the network. In order to secure the Jumpbox, an SSH public key is chosen instead of a password. Running `ssh-keygen` on the host machine will generate a public and a private key. These keys are stored in the ` ~/.ssh/` directory. The public key is copied into the key area in the VM setup. Additionally, a public IP will need to be established for the Jumpbox in order to allow SSH. 
 
-
-![](resources/addsshkey.png)
+<img width="632" alt="addsshkey" src="https://user-images.githubusercontent.com/70340383/169717644-a2211211-a3ed-4fe7-aaa7-f77fa866c5da.png">
 
 4. Next, two more VMs are created, which will be the web servers. During set up, be sure to run that ssh-keygen command on the Jumpbox and not the host, since only the Jumpbox should have access. For now, these VMs do not need a public IP.
 
@@ -53,8 +52,8 @@ In order for Ansible to run commands on other machines, it will need to be able 
 
 Navigate to `/etc/ansible/` from the Ansible container in order to configure Ansible. Start by editing the `hosts` file, and add both web server IP address followed by "ansible_python_interpreter=/usr/bin/python3".
 
+<img width="457" alt="webserver_group" src="https://user-images.githubusercontent.com/70340383/169717658-7582e3cd-555f-458d-9d5c-4f8159e43ee4.png">
 
-![](resources/webserver_group.png)
 
 Once complete, edit the `ansible.cfg` file and add the username needed to SSH into the web servers. This is done by commenting out the remote_user line.
 
@@ -105,7 +104,7 @@ The final step is to setup the load balancer. In Azure, a new load balancer will
 
 Once complete, add a network security group rule that allows TCP traffic on port 80. A web connection can now be established to the public IP of our load balancer as seen below. 
 
-![](resources/dvwa.png)
+<img width="1196" alt="dvwa" src="https://user-images.githubusercontent.com/70340383/169717676-7133c5db-765b-4ff1-9957-24e01bb08752.png">
 
 
 ### ELK Stack
@@ -118,11 +117,13 @@ Once the network is configured correctly, Ansible should also be configured whic
 
 1. SSH onto the Jumpbox. From there, attach to the Ansible container.
 
-![](resources/attach_ansible_container.png)
+<img width="1023" alt="attach_ansible_container" src="https://user-images.githubusercontent.com/70340383/169717688-c97366fe-a2d6-43f3-a192-791407a845b8.png">
+
 
 2. Once attached, navigate back to the `/etc/ansible/hosts` file in order to add the new ELK VMs IP address as a new host group.
 
-![](resources/add_elk_group.png)
+<img width="471" alt="add_elk_group" src="https://user-images.githubusercontent.com/70340383/169717698-7d4d0163-b69f-4224-bdff-81a112a8ccef.png">
+
 
 3. Once the new server is added, the YAML playbook can be configured.
 
@@ -132,18 +133,19 @@ Note: At a high level, the playbook will install docker, pull the preconfigured 
 
 4. Once the playbook is created, run it with `ansible-playbook install-elk.yml`. If successful, it should return no error messages, as seen below.
 
-![](resources/run_playbook.png)
+<img width="1026" alt="run_playbook" src="https://user-images.githubusercontent.com/70340383/169717739-2c417fe8-fdbe-41a7-847a-9b94f2ad8ad3.png">
+
 
 In order to confirm a successful setup, SSH into the ELK VM and run `sudo docker ps -a` in order to see the status of all containers. In this case, the container has been "up 8 minutes" which is a good sign.
 
-![](resources/confirm_running.png)
+<img width="1237" alt="confirm_running" src="https://user-images.githubusercontent.com/70340383/169717748-d29e5fe5-4b9e-4e2c-8c10-2f0efc1f9b7c.png">
 
  
 If security rules have been properly configured (a tcp connection needs to to be allowed on port 5601), Kibana should be accessible from a browser.
 
 The URL will look like: `http://[your.ELK-VM.External.IP]:5601/app/kibana` as seen below.
 
-![](resources/kibana_page.png)
+<img width="1359" alt="kibana_page" src="https://user-images.githubusercontent.com/70340383/169717757-34c43950-5b08-4392-bfb5-fb75dae143ba.png">
 
 
 ### File/Metric Beat - Log Setup
